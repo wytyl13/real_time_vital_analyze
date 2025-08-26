@@ -1,0 +1,10 @@
+# agent
+git+https://github.com/wytyl13/agent.git
+
+# real_time_vital_analyze
+fastapi 
+uvicorn
+redis
+
+
+

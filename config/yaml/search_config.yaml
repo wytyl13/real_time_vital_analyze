@@ -1,0 +1,9 @@
+blocked_domains: 
+  - youtube.com
+  - vimeo.com
+  - dailymotion.com
+  - bilibili.com
+cx: 
+key: 
+snippet_flag: 0
+query_num: 7
