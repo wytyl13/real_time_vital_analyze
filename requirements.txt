@@ -1,10 +1,10 @@
 # agent
-git+https://github.com/wytyl13/agent.git
+git+https://github.com/wytyl13/agent.git@wsy
 
 # real_time_vital_analyze
 fastapi 
 uvicorn
 redis
 
-
+python-multipart
 

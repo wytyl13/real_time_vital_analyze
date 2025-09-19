@@ -23,6 +23,14 @@ agent init
 
 
 
+### api
+```
+[{"from": "replace_name", "to": "卫宇涛"}, {"from": "replace_gender", "to": "男"}, {"from": "replace_age", "to": "18"}, {"from": "replace_file_number", "to": "123456"}, {"from": "replace_description", "to": "我是谁？"}, {"from": "replace_evalutor", "to": "张三"}, {"from": "replace_evalution_doctor", "to": "李四"}, {"from": "replace_reviewer", "to": "王五"}, {"from": "replace_service_object", "to": "卫宇涛"}, {"from": "replace_service_object_family", "to": "李三"}, {"from": "replace_evalution_date", "to": "2025年9月2日"}]
+```
+
+
+
+
 
 
 

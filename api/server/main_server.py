@@ -5,15 +5,21 @@ import logging
 from datetime import datetime
 from pathlib import Path
 import argparse
+from pathlib import Path
 
 # 导入各个服务类
 from api.server.community_real_time_data_server import CommunityRealTimeDataServer
 from api.server.user_data_server import UserDataServer
 from api.server.file_server import FileServer
+from api.server.word2html_server import OnlyOfficeEditor
+from agent.llm_api.ollama_llm import OllamaLLM
+from agent.config.llm_config import LLMConfig
+
+
 
 ROOT_DIRECTORY = Path(__file__).parent.parent.parent
 SQL_CONFIG_PATH = str(ROOT_DIRECTORY / "config" / "yaml" / "sql_config.yaml")
-
+OLLAMA_QWEN_CONFIG = str(ROOT_DIRECTORY / "config" / "yaml" / "ollama_config.yaml")
 
 class AeroSenseMainServer:
     """主服务器类，统一管理所有服务"""
@@ -28,6 +34,14 @@ class AeroSenseMainServer:
         self.user_service = UserDataServer(self.sql_config_path)
         self.file_service = FileServer(str(ROOT_DIRECTORY / "api" / "source"))  # 添加文件服务器
         
+        self.ollama_qwen_llm = OllamaLLM(config=LLMConfig.from_file(Path(OLLAMA_QWEN_CONFIG)))
+        self.word2html_service = OnlyOfficeEditor(
+            onlyoffice_server='http://ai.shunxikj.com:8442',
+            save_api_url='https://ai.shunxikj.com:5002/api/files/upload',
+            jwt_secret='', # 禁用JWT
+            llm=self.ollama_qwen_llm
+        )
+        
         # 设置应用
         self._setup_middleware()
         self._setup_base_routes()
@@ -38,6 +52,9 @@ class AeroSenseMainServer:
         self.app.add_middleware(
             CORSMiddleware,
             allow_origins=[
+                # 添加你的前端地址
+                "http://localhost:8080",
+                "https://localhost:8080",
                 "https://localhost:8000",
                 "https://localhost:8002",
                 "https://localhost:8890",  
@@ -114,6 +131,9 @@ class AeroSenseMainServer:
         self.user_service.register_routes(self.app)
         
         self.file_service.register_routes(self.app)
+    
+        self.word2html_service.register_routes(self.app)
+    
     
     def run(
         self, 

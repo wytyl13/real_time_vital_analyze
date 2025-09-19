@@ -30,7 +30,6 @@ class ListUserData(BaseModel):
 
 class UserDataServer:
     """用户服务类"""
-    
     def __init__(self, sql_config_path: str):
         self.sql_config_path = sql_config_path
         self.logger = logging.getLogger(self.__class__.__name__)
